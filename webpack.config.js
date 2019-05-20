@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { CheckerPlugin } = require('awesome-typescript-loader')
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = (env, argv) => {
   const devMode = !argv.hasOwnProperty('mode') ? true : argv.mode !== 'production'
@@ -15,13 +16,9 @@ module.exports = (env, argv) => {
       'main': './lib/App.tsx'
     },
     output: {
-      filename: 'exit-popup.js',
+      filename: 'task-stars-[hash].js',
       path: path.resolve(__dirname, 'dist'),
-      libraryTarget: 'commonjs2'
-    },
-    externals: {
-      react: 'react',
-      'react-dom': 'react-dom'
+      libraryTarget: 'umd'
     },
     optimization: {
       sideEffects: false,
@@ -37,10 +34,14 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(['dist']),
       new MiniCssExtractPlugin({
-        filename: 'exit-popup.css',
-        chunkFilename: 'exit-popup.css'
+        filename: 'task-stars.css',
+        chunkFilename: 'task-stars.css'
       }),
-      new CheckerPlugin()
+      new CheckerPlugin(),
+      new HtmlWebPackPlugin({
+        template: "./lib/index.html",
+        filename: "./index.html"
+      })
     ],
     module: {
       rules: [
@@ -122,8 +123,19 @@ module.exports = (env, argv) => {
           use: {
             loader: 'awesome-typescript-loader'
           }
+        },
+        {
+          test: /\.(html)$/,
+          use: {
+            loader: 'html-loader'
+          }
         }
       ]
+    },
+    devServer: {
+      contentBase: path.join(__dirname, 'dist'),
+      compress: true,
+      port: 9002
     },
     devtool: devMode ? 'source-map' : false,
     resolve: {
