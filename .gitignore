@@ -1,0 +1,11 @@
+###> npm related ###
+/node_modules
+package-lock.json
+npm-debug.log
+###< npm related ###
+
+###> test related ###
+/coverage
+###< test related ###
+/dist
+.idea
