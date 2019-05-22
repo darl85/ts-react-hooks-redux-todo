@@ -1,21 +1,19 @@
 import * as React from 'react'
 import Form from './Form'
-import { useState } from 'react';
 import TodoInterface from './../model/TodoInterface'
-import { SetStateAction } from "react";
+import { useSelector } from 'react-redux'
+import { TodoState } from "../state/State";
 
 const List = () => {
-  let initialTodos: TodoInterface[] = []
-
-  const [todos, addTodo]: [TodoInterface[], SetStateAction<any>] = useState(initialTodos);
+  const state: TodoState = useSelector((state: TodoState) => state)
 
   return (
     <div className='TaskList'>
-      <Form todos={todos} addTodo={addTodo} />
+      <Form />
 
+      list:
       <ul>
-          {console.log(todos)}
-          {todos.map((todo: TodoInterface, index) => {
+          {state.todos.map((todo: TodoInterface, index) => {
               return <li key={index}>{todo.name}</li>
           })}
       </ul>

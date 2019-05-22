@@ -1,21 +1,22 @@
 import React, {ChangeEvent, FormEvent, SetStateAction} from 'react'
 import { useState } from 'react'
 import TodoInterface from '../model/TodoInterface'
+import { useDispatch, useSelector } from 'react-redux'
+import { AddTodo } from "../action/AddTodo";
 
-interface FormProps {
-  todos: TodoInterface[],
-  addTodo: SetStateAction<any>
-}
+const Form = () => {
+  const [currentTodoName, changeCurrentTodoName]: [string, SetStateAction<any>] = useState('')
+  const dispatch = useDispatch()
 
-const Form = ({todos, addTodo}: FormProps) => {
-
-  const [currentTodoName, changeCurrentTodoName] = useState('')
+  let clearInput = (): void => {
+      changeCurrentTodoName('')
+  }
 
   let submitTask = (event: FormEvent): void => {
     event.preventDefault()
     let todo: TodoInterface = { name: currentTodoName }
-    addTodo([...todos, todo])
-    changeCurrentTodoName('')
+    dispatch(AddTodo(todo))
+    clearInput()
   }
 
   let handleChange = (event: ChangeEvent<HTMLInputElement>): void => {

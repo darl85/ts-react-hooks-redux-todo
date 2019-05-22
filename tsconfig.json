@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./lib/typings.d.ts"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "react",
@@ -9,7 +10,8 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "lib": ["es2015", "dom"]
   },
   "include": [
     "./lib/**/**/*"
