@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { TodoState } from "../state/State";
 
 const List = () => {
-  const state: TodoState = useSelector((state: TodoState) => state)
+  const todos: TodoInterface[] = useSelector((state: TodoState) => state.todos)
 
   return (
     <div className='TaskList'>
@@ -13,8 +13,8 @@ const List = () => {
 
       list:
       <ul>
-          {state.todos.map((todo: TodoInterface, index) => {
-              return <li key={index}>{todo.name}</li>
+          {todos.map((todo: TodoInterface) => {
+              return <li key={todo.id}>{todo.name}</li>
           })}
       </ul>
     </div>

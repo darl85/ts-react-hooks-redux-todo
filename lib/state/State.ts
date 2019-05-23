@@ -1,9 +1,6 @@
 import TodoInterface from "./../model/TodoInterface"
 
 export interface TodoState {
-    todos: TodoInterface[]
+    todos: TodoInterface[],
+    nextTodoIndex: number
 }
-
-export const InitialState: TodoState = {
-    todos: []
-};
